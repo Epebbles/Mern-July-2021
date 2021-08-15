@@ -1,20 +1,44 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
+import { navigate } from '@reach/router';
 
 const Detail = (props) => {
-    const [ product, setProduct ] = useState({})
+    const { productId } = props;
+    console.log( productId );
+    const [ productInfo, setProductInfo ] = useState({});
     useEffect(() => {
-        axios.get("http://localhost:8000/api/products" + props.id)
-            .then( res => setProduct({
-                ...res.data.product
-            }))
-    }, [])
+        axios.get("http://localhost:8000/api/products/" + productId)
+            .then((queriedProduct) => {
+                console.log(queriedProduct);
+                setProductInfo(queriedProduct.data.product);
+            })
+            .catch((err) => console.log(err))
+    }, []);
+
+    const deleteProduct = (productId) => {
+        axios.delete('http://localhost:8000/api/products/' + productId)
+            .then(res => {
+                navigate("/");
+            })
+            .catch((err) => console.log(err));
+    }
     return (
-        <div>
-            <p>Title: {product.title}</p>
-            <p>Price: {product.price}</p>
-            <p>Description: {product.description}</p>
-        </div>
-    )
-}
+        <>
+            {productInfo ? ( 
+                <div>
+                    <h1>Product Info: </h1>
+                    <p>Title: {productInfo.title}</p>
+                    <p>Price: {productInfo.price}</p>
+                    <p>Description: {productInfo.description}</p>
+                    <button onClick={() => deleteProduct(productInfo._id)}>
+                        Delete
+                    </button>
+                </div>
+            ) : (
+                <h1>DTA is loading</h1>
+            )}
+        </>
+    );
+};
+
 export default Detail;

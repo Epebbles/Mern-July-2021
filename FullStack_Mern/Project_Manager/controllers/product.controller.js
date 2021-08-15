@@ -25,25 +25,24 @@ const getAllProducts = (req, res) => {
 
 const findSingleProduct = (req, res) => {
     Product.findOne({ _id: req.params.productId })
-        .then((product) => res.json(product))
-        .catch(err => res.json(err))
+        .then((product) => res.json({ product }))
+        .catch((err) => res.json(err))
 };
 
 const updateProduct = (req, res) => {
+    const { body } = req;
     Product.findOneAndUpdate(
-        { _id: req.params.productId },
-        { price: req.body.price },
-        {description: req.body.description },
+        { _id: req.params.productId }, body,
         { new: true, runValidators: true },
     )
-        .then((updatedProduct) => res.json({ product: updatedProduct }))
+        .then((updatedProduct) => res.json({ updatedProduct }))
         .catch((err) => res.json(err))
 };
 
 const deleteProduct = (req, res) => {
     Product.deleteOne({ _id: req.params.productId})
         .then((deleteConfirm) => res.json(deleteConfirm))
-        .catch(err => res.json(err))
+        .catch((err) => res.json(err))
 }
 
 module.exports = {

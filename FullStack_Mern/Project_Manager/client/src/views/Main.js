@@ -23,8 +23,10 @@ const Main = () => {
             setFormSubmittedBoolean={setFormSubmittedBoolean}
             />
             <hr/>
-            { loaded && <List products={products} removeFromDom={removeFromDom} formSubmittedBoolean={formSubmittedBoolean}
-            setFormSubmittedBoolean={setFormSubmittedBoolean}/>}
+            { loaded && <List products={products} removeFromDom={removeFromDom} 
+            formSubmittedBoolean={formSubmittedBoolean}
+            setFormSubmittedBoolean={setFormSubmittedBoolean}
+            />}
         </div>
     )
 }

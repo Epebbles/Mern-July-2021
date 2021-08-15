@@ -14,20 +14,21 @@ const List = (props) => {
             <h1>Product List</h1>
             {props.products.map((product, index) => {
                 return <p key={index}>
-                    <Link to={"/products/" + product._id}>
-                        {product.title}
+                    <Link to={"/" + product._id}>
+                    {product.title}
                     </Link>
-                    |
-                    <Link to={"/products/" + product._id + "/edit"}>
-                        Edit
+                        |
+                    <Link to={"/" + product._id + "/edit"}>
+                    Edit
                     </Link>
-                    |
+                        |
                     <button onClick={(e)=>{deleteProduct(product._id)}}>
                         Delete
                     </button>
+                    <hr />
                 </p>
             })}
         </div>
-    )
-}
+    );
+};
 export default List;
